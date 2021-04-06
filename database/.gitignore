@@ -1,0 +1,4 @@
+*.sqlite
+*.sqlite-journal
+
+$table->foreignId('type_id')->constrained()->onUpdate('cascade')->onDelete('cascade');

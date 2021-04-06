@@ -1,0 +1,40 @@
+created:
+    - database/factories/Models/EmpresaFactory.php
+    - database/factories/Models/CampuFactory.php
+    - database/factories/Models/TypeFactory.php
+    - database/factories/Models/CursoFactory.php
+    - database/factories/Models/ParticipanteFactory.php
+    - database/factories/Models/CertificateFactory.php
+    - database/factories/Models/EventoFactory.php
+    - database/migrations/2021_03_31_203957_create_empresas_table.php
+    - database/migrations/2021_03_31_203958_create_campus_table.php
+    - database/migrations/2021_03_31_203959_create_types_table.php
+    - database/migrations/2021_03_31_204000_create_cursos_table.php
+    - database/migrations/2021_03_31_204001_create_participantes_table.php
+    - database/migrations/2021_03_31_204002_create_certificates_table.php
+    - database/migrations/2021_03_31_204003_create_eventos_table.php
+    - database/migrations/2021_03_31_204004_create_evento_participante_table.php
+    - database/migrations/2021_03_31_204005_create_evento_user_table.php
+    - app/Models/Empresa.php
+    - app/Models/Campu.php
+    - app/Models/Type.php
+    - app/Models/Curso.php
+    - app/Models/Participante.php
+    - app/Models/Certificate.php
+    - app/Models/Evento.php
+    - database/seeders/EmpresaSeeder.php
+    - database/seeders/CampuSeeder.php
+    - database/seeders/TypeSeeder.php
+    - database/seeders/CursoSeeder.php
+    - database/seeders/ParticipanteSeeder.php
+    - database/seeders/EventoSeeder.php
+    - database/seeders/CertificateSeeder.php
+models:
+    Models\User: { name: string, email: string, email_verified_at: 'datetime nullable', password: string, remember_token: 'string:100 nullable' }
+    Models\Empresa: { name: 'string:255', slug: 'unique nullable', slug_name: 'unique nullable', logo: nullable, description: 'string:255', active: 'enum:PUBLISHED,CANCELED,DRAFT', softdeletes: softDeletes, timestamps: timestamps }
+    Models\Campu: { name: 'string:255', address: 'longText nullable', description: 'string:255', maps: longText, active: 'enum:PUBLISHED,CANCELED,DRAFT', softdeletes: softDeletes, timestamps: timestamps }
+    Models\Type: { name: 'string:255', softdeletes: softDeletes, timestamps: timestamps, active: 'enum:PUBLISHED,CANCELED,DRAFT', relationships: { hasOne: Participante } }
+    Models\Participante: { cpf: unique, name: 'string:255', email: 'unique string:255', phone: 'string:20 nullable', rgm: 'string:20 nullable', type_id: 'id foreign:Type', active: 'enum:PUBLISHED,CANCELED', softdeletes: softDeletes, timestamps: timestamps, relationships: { belongsToMany: Evento, hasOne: Type } }
+    Models\Certificate: { texto_1: 'string default:''Certificamos que''', texto_2: 'string default:''participou do evento intitulado''', texto_3: 'string default:''na Universidade .......... com''', texto_4: string, texto_5: string, carga_horaria: 'string:255 nullable', assinatura_1_imagem: 'string:255 nullable', assinatura_1_nome: 'string:255 nullable', assinatura_1_texto: 'string:255 nullable', assinatura_2_imagem: 'string:255 nullable', assinatura_2_nome: 'string:255 nullable', assinatura_2_texto: 'string:255 nullable', assinatura_3_imagem: 'string:255 nullable', assinatura_3_nome: 'string:255 nullable', assinatura_3_texto: 'string:255 nullable', empresa_logo: 'enum:YES,NO', evento_logo: 'enum:YES,NO', softdeletes: softDeletes, timestamps: timestamps, relationships: { hasOne: Evento } }
+    Models\Evento: { empresa_id: 'id foreign:Empresa', campu_id: 'id foreign:Campu', name: 'string:255 nullable', slug: 'unique nullable', description: 'longText nullable', palestrante: 'longText nullable', publico: 'longText nullable', data: 'date nullable', carga_horaria: 'string:255 nullable', horario: 'string:255 nullable', local: 'string:255 nullable', local_url: 'string:255 nullable', duracao: 'string:255 nullable', capacidade: 'string:255 nullable', recursos: 'string:255 nullable', certificado: 'string:255 nullable', certificado_url: 'string:255 default:''certificado''', preview_url: 'string:255 default:''preview''', token: 'string:255 nullable', logo: nullable, active_certficado: 'enum:PUBLISHED,DRAFT default:''DRAFT''', active: 'enum:PUBLISHED,CANCELED,DRAFT default:''DRAFT''', softdeletes: softDeletes, timestamps: timestamps, relationships: { belongsToMany: 'Participante, User', hasOne: 'Empresa, Campu' } }
+    Models\Curso: { name: 'string:255', active: 'enum:PUBLISHED,CANCELED,DRAFT', softdeletes: softDeletes, timestamps: timestamps }
