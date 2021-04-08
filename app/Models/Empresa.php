@@ -38,25 +38,19 @@ class Empresa extends Model
         'id' => 'integer',
     ];
 
-    public static function boot()
-    {
-        parent::boot();
-        static::deleting(function($obj) {
-            Storage::delete(Str::replaceFirst('storage/','public/', $obj->image));
-        });
-    }
-
     public function setLogoAttribute($value)
     {
         $attribute_name = "logo";
         // destination path relative to the disk above
         $destination_path = "public/empresas";
-
+        //dd(Storage::delete($destination_path. '/'. 'd788ed2c65a9e654b710b075801d64a1.jpg'));
+        
         // if the image was erased
         if ($value==null) {
-            // delete the image from disk
-            Storage::delete($this->{$attribute_name});
 
+            // delete the image from disk
+            Storage::delete(Str::replaceFirst('storage/','public/', $this->{$attribute_name}));
+            
             // set null in the database column
             $this->attributes[$attribute_name] = null;
         }
@@ -80,6 +74,7 @@ class Empresa extends Model
             // but first, remove "public/" from the path, since we're pointing to it
             // from the root folder; that way, what gets saved in the db
             // is the public URL (everything that comes after the domain name)
+            //$public_destination_path = Str::replaceFirst('public/', 'storage/', $destination_path);
             $public_destination_path = Str::replaceFirst('public/', 'storage/', $destination_path);
             $this->attributes[$attribute_name] = $public_destination_path.'/'.$filename;
         }
