@@ -42,8 +42,7 @@ class Empresa extends Model
     {
         $attribute_name = "logo";
         // destination path relative to the disk above
-        $destination_path = "public/empresas";
-        //dd(Storage::delete($destination_path. '/'. 'd788ed2c65a9e654b710b075801d64a1.jpg'));
+        $destination_path = "public/empresa";
         
         // if the image was erased
         if ($value==null) {

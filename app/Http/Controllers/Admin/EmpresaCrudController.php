@@ -83,6 +83,5 @@ class EmpresaCrudController extends CrudController
         CRUD::column('slug_name')->label('Url');
         CRUD::column('description')->type('textarea')->label('Descrição do Empresa');
         CRUD::column('active')->label('Status');
-        $this->crud->removeColumn('extras');
     }
 }
