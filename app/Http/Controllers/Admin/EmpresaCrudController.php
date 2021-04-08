@@ -39,17 +39,11 @@ class EmpresaCrudController extends CrudController
      */
     protected function setupListOperation()
     {
-        CRUD::column('logo')->label('Logo');
-        CRUD::column('name')->label('Nome');
+        CRUD::column('logo')->type('image')->label('Logo');
+        CRUD::column('name')->label('Empresa');
         CRUD::column('slug')->label('Bread');
         CRUD::column('slug_name')->label('Url');
         CRUD::column('active')->label('Status');
-
-        /**
-         * Columns can be defined using the fluent syntax or array syntax:
-         * - CRUD::column('price')->type('number');
-         * - CRUD::addColumn(['name' => 'price', 'type' => 'number']); 
-         */
     }
 
     /**
@@ -62,18 +56,12 @@ class EmpresaCrudController extends CrudController
     {
         CRUD::setValidation(EmpresaRequest::class);
 
+        CRUD::field('logo')->type('image')->label('Logo da Empresa');
         CRUD::field('name')->label('Nome da Empresa');
         CRUD::field('slug')->label('Bread da Empresa');
         CRUD::field('slug_name')->label('Url Amigável');
-        CRUD::field('logo')->type('image')->label('Logo');
         CRUD::field('description')->type('ckeditor')->label('Descrição do Empresa');
         CRUD::field('active')->type('enum')->label('Status');
-
-        /**
-         * Fields can be defined using the fluent syntax or array syntax:
-         * - CRUD::field('price')->type('number');
-         * - CRUD::addField(['name' => 'price', 'type' => 'number'])); 
-         */
     }
 
     /**
@@ -84,8 +72,17 @@ class EmpresaCrudController extends CrudController
      */
     protected function setupUpdateOperation()
     {
-        $this->setupCreateOperation();
+        $this->setupCreateOperation();      
+    }
 
-        
+    protected function setupShowOperation()
+    {
+        CRUD::column('logo')->type('image')->label('Logo');
+        CRUD::column('name')->label('Empresa');
+        CRUD::column('slug')->label('Bread');
+        CRUD::column('slug_name')->label('Url');
+        CRUD::column('description')->type('textarea')->label('Descrição do Empresa');
+        CRUD::column('active')->label('Status');
+        $this->crud->removeColumn('extras');
     }
 }
